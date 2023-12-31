@@ -2,10 +2,11 @@ import React from 'react'
 import {Link, Outlet} from 'react-router-dom'
 const Dashboard = () => {
   return (
+
     <div className='container-fluid'>
       <div className='row flex-nowrap'>
         <div className='col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark'> 
-        <div className='d-flex  flex-column align-items-center pb-3 mb-md-1 mt-md-3 me-md-auto text-white'>
+        <div className='d-flex  flex-column align-items-center pb-3 mb-md-1 mt-md-4 me-md-auto text-white'  >
           <Link to="/dashboard">Gururaj Kulkarni</Link>
         </div>
         <ul>
@@ -28,7 +29,7 @@ const Dashboard = () => {
         
         <div className='col'>
           <div>
-          <h1>EMPLOYEE MANAGEMENT SYSTEM</h1>
+          <h1 style={{color:"green",fontWeight:"bold"}}>Employee Management System</h1>
           </div>
           <Outlet/>
           </div>

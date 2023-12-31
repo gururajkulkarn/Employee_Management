@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 
@@ -19,9 +19,26 @@ const Manageemply = () => {
       });
   }, []);
 
+
+  const navigate = useNavigate();
+
+const handleDelete = (id) => {
+  axios.delete('http://localhost:3001/auth/delete_employee/' + id)
+.then(result => {
+  if(result.data.Status) {
+alert(" Deleted Successfulyy..")
+    window.location.reload()
+  }
+  else {
+    alert(result.data.Error)
+  }
+})
+}
+
+
+
   return (
     <>
-    <div>Manageemply</div>
     <div className='container'>
     <h3>Employees List</h3>
   </div>
@@ -35,7 +52,13 @@ const Manageemply = () => {
         <table className='table'>
           <thead>
             <tr>
-              <th>Name of The Category</th>
+              <th>Name of The Employee</th>
+              <th>Email Id</th>
+              <th>Password</th>
+              <th>Salary</th>
+              <th>Address</th>
+              <th>Image</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody style={{border:"1px solid black"}} >
@@ -47,8 +70,8 @@ const Manageemply = () => {
                 <td>{item.salary}</td>
                 <td>{item.address}</td>
                 <td><img src={`http://localhost:3001/Images/`+item.image} width="150px" alt="pic"/></td>
-                <td><Link to={`/dashboard/edit_employee/`+item.id} className='btn btn-warning'>Edit</Link></td>
-                <td><button className='btn btn-danger'>Delete</button></td>
+                <td><Link to={`/dashboard/edit_employee/`+item.id} className='btn btn-warning'>Edit</Link> &nbsp;
+                 <button className='btn btn-danger' onClick={() => handleDelete(item.id)}>Delete</button></td>
               </tr>
             ))}
           </tbody>

@@ -5,7 +5,7 @@ import { adminRouter } from "./Routes/AdminRoutes.js";
 const app = express()
 app.use(cors({
     origin : ["http://localhost:3000"],
-    methodes:['GET','POST','PUT'],
+    methodes:['GET','POST','PUT','DELETE'],
     credentials : true
 }))
 app.use(express.json())

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const EditEmployee = () => {
@@ -10,9 +10,7 @@ const EditEmployee = () => {
     email: '',
     address: '',
     password: '',
-    category_id: '',
-    salary: '',
-    image: ''
+    salary: ''
   });
 
   const [categories, setCategories] = useState([]);
@@ -40,7 +38,7 @@ const EditEmployee = () => {
       password: employeeData.password,
       salary: employeeData.salary,
       address: employeeData.address,
-      category_id: employeeData.category_id,
+      
     });
   })
   .catch(err => console.log(err));
@@ -48,12 +46,25 @@ const EditEmployee = () => {
 
   }, [id]);
 
+const navigate = useNavigate();
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the updated employee state with the fetched data
-    console.log(employee);
+  
+   
+    axios.put(`http://localhost:3001/auth/edit_employee/${id}`, employee)
+      .then(result => {
+        console.log(result.data);
+        navigate('/dashboard/manageemply')   
+        // Handle success, e.g., redirect to another page
+      })
+      .catch(error => {
+        console.error('Error updating employee:', error);
+        // Handle error, e.g., show an error message to the user
+      });
   };
+  
+  
 
   return (
     <>
@@ -114,24 +125,7 @@ const EditEmployee = () => {
                   onChange={(e) => setEmployee({ ...employee, address: e.target.value })}
                 />
 
-                <select
-                  name="category_id"
-                  id="category"
-                  onChange={(e) => setEmployee({ ...employee, category_id: e.target.value })}
-                >
-                  {categories.map((item) => (
-                    <option key={item.id} value={item.id}>{item.name}</option>
-                  ))}
-                </select>
-
-                <input
-                  type="file"
-                  name="image"
-                  placeholder="Address"
-                  className='form-control rounded-0'
-                  onChange={(e) => setEmployee({ ...employee, image: e.target.files[0] })}
-                />
-              </div>
+                </div>
 
               <button className='btn btn-success mt-4 w-50 rounded-3' type="submit">Update</button>
             </form>
